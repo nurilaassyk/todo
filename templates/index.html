@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+
+
+{% block menu %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="search-block pt-3 pb-3">
+        <div class="container">
+            <p class="pt-3 pb-1 text-secondary"> Search by status</p>
+            <div class="hstack gap-3">
+                <form class="d-flex" role="search" method="get">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search"
+                           aria-label="Search" value="{{ form.search.value }}">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="task-block pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h5> Title </h5>
+                </div>
+                <div class="col">
+                    <h5> Status </h5>
+                </div>
+                <div class="col">
+                    <h5> Date </h5>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+
+    <div class="task-block pt-3">
+        <div class="container">
+            <div class="row row-cols-4 ">
+                {% for t in task %}
+                    <div class="col">
+                        <a class="link-dark" href="{% url 'task_detail' t.pk %}"> {{ t.task }}</a>
+                    </div>
+                    <div class="col">
+                        {% if t.status == 'todo' %}
+                            <p class=" text-secondary"> {{ t.status }}</p>
+                        {% elif t.status ==  'in progress' %}
+                            <p class=" text-primary"> {{ t.status }}</p>
+                        {% elif t.status ==  'done' %}
+                            <p class=" text-success"> {{ t.status }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col ">
+                        <p> {{ t.start_date.date }} - {{ t.end_date.date }}</p>
+                    </div>
+                    <div class="col d-flex  justify-content-center">
+                        <a class="border-0 btn-transition btn btn-outline-success" href="{% url 'task_edit'  t.pk %}">
+                            <i class="bi bi-pencil-square" style="font-size: 20px;"></i>
+                        </a>
+                        <form action="{% url 'task_delete' t.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button class="border-0 btn-transition btn  btn-outline-danger">
+                                <i class="bi bi-x-square" style="font-size: 20px;"></i>
+                            </button>
+
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="paginate-block pt-5 ">
+        <div class="container">
+            <nav aria-label="Пример навигации по страницам">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Предыдущая">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Следующая">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+{% endblock %}

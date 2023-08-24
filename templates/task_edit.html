@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block menu %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3 class="main-txt p-3 d-flex justify-content-center">Edit issues</h3>
+        <div class="form">
+            <form action="{% url 'task_edit' task.pk %}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <div class="form">
+                    {% include 'partial/task_form.html' with button_txt='Edit' form=form %}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+{% load humanize %}
+
+
+{% block menu %}
+{% endblock %}
+
+{% block content %}
+    <div class="task-detail pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col col-6">
+                    <div class="card ">
+                        <div class="card-header">
+                            @{{ task.author }} created {{ task.created_at|naturaltime }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title pt-3">{{ task.task }}</h5>
+                            <p class="card-text">{{ task.description }}</p>
+                            <hr>
+                            <p class="card-text">
+                                <i>
+                                    {% with start_date=task.start_date.date %}
+                                        {% with end_date=task.end_date.date %}
+                                            {{ start_date|date:"d F Y" }} - {{ end_date|date:"d F Y" }}
+                                        {% endwith %}
+                                    {% endwith %}
+                                </i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-1">
+                </div>
+
+                <div class="col col-4">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Executor</th>
+                            <th scope="col">Labels</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>@{{ task.executor }}</td>
+                            <td>
+                                {% if task.status == 'todo' %}
+                                    <p class=" text-secondary"> {{ task.status }}</p>
+                                {% elif task.status ==  'in progress' %}
+                                    <p class=" text-primary"> {{ task.status }}</p>
+                                {% elif t.status ==  'done' %}
+                                    <p class=" text-success"> {{ task.status }}</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

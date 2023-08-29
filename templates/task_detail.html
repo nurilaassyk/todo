@@ -8,8 +8,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="task-detail pt-5">
+    <div class="task-detail ">
         <div class="container">
+            <h5 class="card-title pt-3 pb-3"> Task detail </h5>
             <div class="row">
                 <div class="col col-6">
                     <div class="card ">
@@ -64,6 +65,18 @@
         </div>
     </div>
 
+    {% if user.is_superuser %}
+        <div class="container pt-5 pb-3">
+            <h5 class="card-title pt-3 d-flex flex-row"> Task detail </h5>
+            {% for h in task.history.all %}
+                <div class="pt-3">
+                    &#10072; &hyphen;{{ h.history_user }} changed at {{ h.history_date }} status {{ h.status }}
+                </div>
+                <p class="d-inline">kkk</p>
+                <p class="d-inline">kkk</p>
+            {% endfor %}
+        </div>
+    {% endif %}
 
 
 {% endblock %}

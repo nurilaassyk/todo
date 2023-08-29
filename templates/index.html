@@ -8,19 +8,7 @@
 
 {% block content %}
 
-    <div class="search-block pt-3 pb-3">
-        <div class="container">
-            <p class="pt-3 pb-1 text-secondary"> Search by status</p>
-            <div class="hstack gap-3">
-                <form class="d-flex" role="search" method="get">
-                    {% csrf_token %}
-                    <input class="form-control me-2" type="search" name="search" placeholder="Search"
-                           aria-label="Search" value="{{ form.search.value }}">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
-        </div>
-    </div>
+  {% include 'partial/search.html' %}
 
     <div class="task-block pt-5">
         <div class="container">
@@ -78,27 +66,9 @@
         </div>
     </div>
 
-    <div class="paginate-block pt-5 ">
-        <div class="container">
-            <nav aria-label="Пример навигации по страницам">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Предыдущая">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Следующая">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
 
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
 
 {% endblock %}

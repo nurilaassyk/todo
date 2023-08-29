@@ -7,20 +7,20 @@ from webapp.models import Task
 from django.db.models import Q
 
 
-
 class IndexView(ListView):
     template_name = 'index.html'
     model = Task
     context_object_name = 'task'
     paginate_by = 5
     paginate_orphans = 1
+    queryset = Task.objects.get_queryset().order_by('id')
 
     def get(self, request, *args, **kwargs):
         self.form = self.get_search_form()
         self.search_value = self.get_search_value()
         return super().get(request, *args, **kwargs)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['form'] = self.form
         if self.search_value:

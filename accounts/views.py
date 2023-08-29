@@ -1,8 +1,10 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.shortcuts import redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 
 from accounts.forms import LoginForm
+from webapp.models import Task
 
 
 class LoginView(TemplateView):
@@ -30,3 +32,15 @@ class LoginView(TemplateView):
         if next:
             return redirect(next)
         return redirect('index')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
+
+class UserDetailView(DetailView):
+    template_name = 'profile.html'
+    model = User
+    context_object_name = 'author'
+
